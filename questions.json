@@ -41,7 +41,7 @@
 		"Lego":
 		[
 			{
-				"comment": ["Example of grouped questions, will produce a moodle question group, moodle", 
+				"comment": ["Example of grouped questions, will produce a moodle question group, moodle",
 							"will ask one question from each group so this can be used to have multiple different",
 							"but related question in the same group as opposed to just variations on a single question."],
 
@@ -90,7 +90,7 @@
 			"question": "In the Goon show, what was believed to cure the dreaded lurgy?",
 			"options": ["Playing in a brass band",
 						"Being hit on the head by a piano",
-						"A mustard and cress sandwitch",
+						"A mustard and cress sandwich",
 						"Rhubarb, Rhubarb, Rhubarb",
 						"Brandyyyyyy!",
 						"Eccles"]
@@ -101,7 +101,7 @@
 			"comment": ["Example of code question",
 						"Text in code blocks will be formatted using a monospaced font and have whitespace preserved",
 						"Code will appear below the question text"],
-			
+
 			"question": "What will the following code print.",
 			"code": ["#include <iostream>",
 					 "using namespace std;",
@@ -112,6 +112,30 @@
 					 "    return 0;",
 					 "}"],
 			"options": ["Hello World!", "Hello World", "I am Groot!", "World Hello"]
+		},
+
+		"Cloze":
+		{
+			"comment": ["The most complicated of the supported types, allows you to embed Cloze code directly.",
+						"The options block is ignored. Only included as a feature so that you can store all test questions",
+						"in .json files."],
+
+			"type": "cloze",
+			"question": "Select the correct line of code so that the animals are sorted into ascending alphabetical order (aardvark, binturong, cat etc).",
+			"code":["seq = [\"cat\", \"aardvark\", \"dog\", \"elephant\", \"binturong\"]",
+					"",
+					"sorted = False",
+					"while not sorted:",
+					"    sorted = True",
+					"",
+					"    for i in range( len(seq)-1 ):",
+					"        {1:MULTICHOICE:=if seq[i] > seq[i+1]:~if seq[i] < seq[i+1]:~for j in range( len(seq)-1 ):~while sorted:}",
+					"            seq[i], seq[i+1] = seq[i+1], seq[i]",
+					"            sorted = False",
+					"",
+					"    for s in seq:",
+					"        print( s )"]
 		}
+
 	}
 }
