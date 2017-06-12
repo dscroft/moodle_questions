@@ -1,0 +1,117 @@
+{
+	"defaults":
+	{
+		"comment": ["Change the default values used by all questions.",
+					"The 'variations' parameter controls how many versions of the question be produced.",
+					"The 'select' parameter control how many answers will appear in each question",
+					"The 'type' paramater control the type of the question, currently only 'choice' and 'order´ are supported"],
+
+		"type": "choice",
+		"variations": 5,
+		"select": 3
+	},
+	"questions":
+	{
+		"SI units":
+		{
+			"comment": ["Example of the 'order' style question. Will generate random permutations",
+						"of the options as incorrect answer options."],
+
+			"type": "order",
+			"question": "From smallest to greatest, what is the correct order of SI prefixs",
+			"options": ["Kilo", "Mega", "Giga", "Tera", "Peta", "Exa", "Zeta", "Yotta"]
+		},
+
+		"Phobia":
+		{
+			"comment": ["Example of the 'choice' style question. Will generate multiple versions of this",
+						"question (up to 'variation' different version) each containing a subset of the",
+						"options (subsets will be of 'select' size)."],
+
+			"type": "choice",
+			"question": "What is anatidaephobia the fear of?",
+			"options": ["Somewhere, somehow a duck is watching you",
+						"The word 'an'",
+						"Tides",
+						"The colour purple",
+						"Baths",
+						"People called Ana"]
+		},
+
+		"Lego":
+		[
+			{
+				"comment": ["Example of grouped questions, will produce a moodle question group, moodle", 
+							"will ask one question from each group so this can be used to have multiple different",
+							"but related question in the same group as opposed to just variations on a single question."],
+
+				"question": "What was the piece count on the largest commerical Lego set, the Taj Mahal?",
+				"options": ["N",
+							"Best case",
+							"Worst case",
+							"Average case",
+							"Rough case",
+							"Just in case"]
+			},
+			{
+				"question": "Who were the offical enemies of the Futurons?",
+				"options": ["The Blacktrons",
+							"The Mixtels",
+							"The Pirates",
+							"M-Tron",
+							"Spyrius",
+							"The Aquanauts"]
+			}
+		],
+
+		"Calvin and Hobbes":
+		{
+			"comment": ["Example of multiline question text. HTML blocks can be included in question and option text",
+						"if additional formatting is required."],
+
+			"question": ["In Calvin and Hobbes by Bill Waterstone",
+						 "",
+						 "Who was Calvin's teacher?"],
+			"options": ["Miss Wormwood",
+						"Suzie Dent",
+						"Spaceman Spiff",
+						"Moe",
+						"Rosalyn"]
+		},
+
+
+		"Illness":
+		{
+			"comment": "Example of overloading the default parameters",
+
+			"variations": 1,
+			"select": 2,
+			"type": "choice",
+			"question": "In the Goon show, what was believed to cure the dreaded lurgy?",
+			"options": ["Playing in a brass band",
+						"Being hit on the head by a piano",
+						"A mustard and cress sandwitch",
+						"Rhubarb, Rhubarb, Rhubarb",
+						"Brandyyyyyy!",
+						"Eccles"]
+		},
+
+		"Code":
+		{
+			"comment": ["Example of code question",
+						"Text in code blocks will be formatted using a monospaced font and have whitespace preserved",
+						"Code will appear below the question text"],
+			
+			"question": "What will the following code print.",
+			"code": ["#include <iostream>",
+					 "using namespace std;",
+					 "",
+					 "int main()",
+					 "{",
+					 "    cout << \"Hello World!\" << endl;",
+					 "    return 0;",
+					 "}"],
+			"options": ["Hello World!", "Hello World", "I am Groot!", "World Hello"]
+		}
+	}
+}
