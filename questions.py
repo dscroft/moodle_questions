@@ -18,9 +18,9 @@ class Question:
 
 	def __variations_possible( self, options, select ):
 		""" find the total number possible combinations of select items
-			given that we have options values to select from 
+			given that we have options values to select from
 			this code is kludgy as hell but works, should probably
-			replace with some sort of binomial solution? """	
+			replace with some sort of binomial solution? """
 
 		variations = 0
 		for i in range(2**options):
@@ -35,7 +35,7 @@ class Question:
 		if self.__style not in self.__styles:
 			raise self.UnknownStyle('Question type "%s" is not recognized' % self.__style)
 
-	
+
 		if self.__style != 'cloze':
 			# check for options
 			if self.__options is None or len(self.__options) == 0:
@@ -140,9 +140,9 @@ class Question:
 		return self.code != []
 
 	def get_code(self):
-		code = self.code
+		code = copy.copy(self.code)
 		replacements = [ ("<","ᐸ"), (">","ᐳ"), (" ","&nbsp;")]#, ("{","&#123;"), ("}","&#125;") ]
-		
+
 		for i in range(len(code)):
 			for c, r in replacements:
 				code[i] = code[i].replace(c,r)
@@ -150,7 +150,7 @@ class Question:
 			code[i] = "<span style=\"font-family: 'courier new', courier, monospace;\">{}<br /></span>".format( code[i] )
 
 		return "".join(code)
-				
+
 
 def process( infilenames, outfilename ):
 	questions = {}
@@ -182,7 +182,7 @@ def process( infilenames, outfilename ):
 
 				if type(body) is not list:
 					body = [body]
-				
+
 				for b in body:
 					if type(b) not in [dict]:
 						continue
@@ -201,16 +201,16 @@ def process( infilenames, outfilename ):
 					except (Question.NotMCQ, Question.UnknownStyle) as e:
 						print( 'ERROR - %s' % e )
 						print( 'ERROR - Skipping question' )
-					
+
 				print()
 
 		# cleanup
 		for title in [ k for k, v in questions.items() if v == [] ]:
 			del questions[title]
-		
+
 		print('Generated {} questions'.format(len(questions)) )
 		for title, question in questions.items():
-			print( "    {} - {} variations".format(title,len(question)) )
+			print( "    {} - {} variations".format(title,sum([i.num_variations() for i in question])) )
 
 	print()
 	print( 'Writing "{}"'.format(outfilename) )
@@ -222,11 +222,11 @@ def process( infilenames, outfilename ):
 			if sum([ i.num_variations() for i in question]) <= 0:
 				continue
 
-			print( '  <question type="category">',                              file=f ) 
-			print( '    <category>',                                            file=f ) 
-			print( '      <text>$course$/Scripted_questions/%s</text>' % title, file=f ) 
-			print( '    </category>',                                           file=f ) 
-			print( '  </question>',                                             file=f ) 
+			print( '  <question type="category">',                              file=f )
+			print( '    <category>',                                            file=f )
+			print( '      <text>$course$/Scripted_questions/%s</text>' % title, file=f )
+			print( '    </category>',                                           file=f )
+			print( '  </question>',                                             file=f )
 
 			count = 1
 			for q in question:
@@ -242,6 +242,7 @@ def process( infilenames, outfilename ):
 					print( '    <questiontext format="html">', file=f )
 					print( '      <text><![CDATA[<p>%s</p>' % q.get_text(), file=f )
 					if q.has_code():
+						#print( q.get_code() )
 						print( '                 <p>%s</p>' % q.get_code(), file=f )
 					print( '                     <p>%s</p>]]></text>' % q.get_cloze(v), file=f )
 					print( '    </questiontext>',              file=f )
