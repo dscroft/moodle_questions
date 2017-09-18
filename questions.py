@@ -121,7 +121,7 @@ class Question:
 			for c, r in replacements:
 				variations[i] = variations[i].replace(c,r)
 
-		cloze = '{1:MCV:='
+		cloze = '{1:MCVS:='
 		cloze += '~'.join( variations )
 		cloze += '}'
 		return cloze
