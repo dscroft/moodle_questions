@@ -128,7 +128,7 @@ class Question:
 
 	def get_text(self):
 		text = self.text
-		replacements = [ ("<","ᐸ"), (">","ᐳ")]#, ("{","&#123;"), ("}","&#125;") ]
+		replacements = [ ("<","ᐸ"), (">","ᐳ"), (" ","&nbsp;"), ("\t","&nbsp"*4)]#, ("{","&#123;"), ("}","&#125;") ]
 
 		for i in range(len(text)):
 			for c, r in replacements:
@@ -141,7 +141,7 @@ class Question:
 
 	def get_code(self):
 		code = copy.copy(self.code)
-		replacements = [ ("<","ᐸ"), (">","ᐳ"), (" ","&nbsp;")]#, ("{","&#123;"), ("}","&#125;") ]
+		replacements = [ ("<","ᐸ"), (">","ᐳ"), (" ","&nbsp;"), ("\t","&nbsp"*4)]#, ("{","&#123;"), ("}","&#125;") ]
 
 		for i in range(len(code)):
 			for c, r in replacements:
