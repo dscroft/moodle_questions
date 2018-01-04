@@ -152,7 +152,7 @@ class Question:
 		return "".join(code)
 
 
-def process( infilenames, outfilename ):
+def process( infilenames, outfilename, exclude ):
 	questions = {}
 
 	for filename in infilenames:
@@ -177,6 +177,7 @@ def process( infilenames, outfilename ):
 			# loop over every question in the json and create a Question() object
 			for title, body in structure['questions'].items():
 				print( "  {}".format(title) )
+
 				if title not in questions:
 					questions[title] = []
 
@@ -188,6 +189,16 @@ def process( infilenames, outfilename ):
 						continue
 
 					print( "    {}...".format( ''.join(b.get("question"))[:60] ) )
+
+					# check for tags
+					tags = b.get("tags", [])
+					if type(tags) is not list: tags = [tags]
+					tags = set(tags)
+
+					if not exclude.isdisjoint(tags):
+						print( '    EXCLUDED' )
+						continue					
+
 					try:
 						q = Question( text=b.get("question"), \
 					   			   options=b.get("options"), \
@@ -257,15 +268,21 @@ def process( infilenames, outfilename ):
 if __name__ == '__main__':
 	outfilename = 'moodle.xml'
 
-	options, args = getopt.getopt( sys.argv[1:], 'ho:', ["help", "output="] )
+	options, args = getopt.getopt( sys.argv[1:], 'ho:e:', ["help", "output=", "exclude="] )
 
+	exclude = set()
 	for opt, arg in options:
 		if opt in ('-h', '--help'):
-			print( "" )
+			print( "  -e --exclude [tag]        Exclude questions from the output if they contain the specified tag." )
+			print( "  -o --output [filename]    Specify output filename." )
+		elif opt in ('-e', '--exclude'):
+			exclude.add( arg )
 		elif opt in ('-o', '--output'):
 			outfilename = arg
 
 	if len(args) == 0:
 		args = ["questions.json"]
 
-	sys.exit( process(args, outfilename) )
+	print(exclude)
+
+	sys.exit( process(args, outfilename, exclude) )
