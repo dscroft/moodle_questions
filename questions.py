@@ -128,7 +128,7 @@ class Question:
 
 	def get_text(self):
 		text = self.text
-		replacements = [ ("<","ᐸ"), (">","ᐳ"), (" ","&nbsp;"), ("\t","&nbsp"*4)]#, ("{","&#123;"), ("}","&#125;") ]
+		replacements = [ ("<","ᐸ"), (">","ᐳ"), (" ","&nbsp;"), ("\t","&nbsp"*4)]#, ("{","❴"), ("}","❵;") ]
 
 		for i in range(len(text)):
 			for c, r in replacements:
